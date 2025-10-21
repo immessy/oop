@@ -4,39 +4,38 @@ using namespace std;
 class SimpleList 
 {
 private:
-    int* elements; // Dynamic array to store list elements
-    int capacity;  // Total capacity of array
-    int count;     // Current number of elements
+    int* elements; // Array to hold the list items
+    int capacity;  // Current capacity of the array
+    int count;     // How many items are currently in the list
 
 public:
     SimpleList() 
     {
-        capacity = 2;  // Start with small capacity
-        count = 0;
-        elements = new int[capacity];
+        capacity = 2;       // Start small, we'll grow if needed
+        count = 0;          
+        elements = new int[capacity]; // Allocate memory for initial capacity
     }
 
     void add(int value) 
     {
         if (count == capacity) 
         {
-            // Double the capacity when full
-            capacity *= 2;
+            capacity *= 2;             // Double the capacity when full
             int* temp = new int[capacity];
             for (int i = 0; i < count; ++i)
-                temp[i] = elements[i];
-            delete[] elements;
-            elements = temp;
+                temp[i] = elements[i]; // Copy old items to new bigger array
+            delete[] elements;         
+            elements = temp;           // Update pointer to new array
         }
-        elements[count++] = value; // Add new element
+        elements[count++] = value;     // Add new element at the end
     }
 
     void remove() 
     {
         if (count > 0)
-            count--; // Remove last element
+            count--;                   // Remove last element
         else
-            cout << "List is empty" << endl;
+            cout << "List is empty" << endl; // Edge case handled
     }
 
     void display() 
@@ -48,34 +47,37 @@ public:
         }
         cout << "[ ";
         for (int i = 0; i < count; ++i)
-            cout << elements[i] << " ";
+            cout << elements[i] << " "; // Print all items
         cout << "]" << endl;
     }
 
     int size() 
     {
-        return count; // Return number of elements
+        return count; // Return the number of elements
     }
 
     ~SimpleList() 
     {
-        delete[] elements; // Free memory
+        delete[] elements; // Free memory when object is destroyed
     }
 };
 
 int main() 
 {
     SimpleList myList;
-    myList.add(1);
+    myList.add(1); 
     myList.add(2);
     myList.add(3);
-    myList.display();
+
+    myList.display();               // Shows [1 2 3]
     cout << "Size: " << myList.size() << endl;
 
     myList.remove();
     myList.remove();
     myList.remove();
-    myList.remove(); // Test removing from empty list
-    myList.display();
+    myList.remove();                // Trying to remove from empty list
+    myList.display();               // Shows "List is empty"
+
     return 0;
 }
+
